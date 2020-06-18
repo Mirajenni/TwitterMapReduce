@@ -7,26 +7,10 @@ import os
 import sys
 import pika
 
-
+#código utilizado do github.com/agalea91
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
 channel.queue_declare(queue='coronavirus')
-
-'''
-In order to use this script you should register a data-mining application
-with Twitter.  Good instructions for doing so can be found here:
-http://marcobonzanini.com/2015/03/02/mining-twitter-data-with-python-part-1/
-
-After doing this you can copy and paste your unique consumer key,
-consumer secret, access token, and access secret into the load_api()
-function below.
-
-The main() function can be run by executing the command: 
-python twitter_search.py
-
-I used Python 3 and tweepy version 3.5.0.  You will also need the other
-packages imported above.
-'''
 
 def load_api():
     consumer_key = 'uNx3hCv8DuXxviyzieh9JoAc2'
@@ -35,12 +19,11 @@ def load_api():
     access_secret = 'fEgLDO9BNunCD05Lr9n0dknjS69QwiNBrsZftbq9LkeCD'
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_secret)
-    # load the twitter API via tweepy
+    # autenticar
     return tweepy.API(auth)
 
     
 def tweet_search(api, query, max_tweets, max_id, since_id, lang):
-
     searched_tweets = []
     while len(searched_tweets) < max_tweets:
         remaining_tweets = max_tweets - len(searched_tweets)
