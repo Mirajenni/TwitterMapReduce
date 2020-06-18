@@ -7,10 +7,13 @@ import os
 import sys
 import pika
 
+
 #código utilizado do github.com/agalea91
+
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
 channel.queue_declare(queue='coronavirus')
+
 
 def load_api():
     consumer_key = 'uNx3hCv8DuXxviyzieh9JoAc2'
@@ -19,11 +22,12 @@ def load_api():
     access_secret = 'fEgLDO9BNunCD05Lr9n0dknjS69QwiNBrsZftbq9LkeCD'
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_secret)
-    # autenticar
+    # load the twitter API via tweepy
     return tweepy.API(auth)
 
     
 def tweet_search(api, query, max_tweets, max_id, since_id, lang):
+
     searched_tweets = []
     while len(searched_tweets) < max_tweets:
         remaining_tweets = max_tweets - len(searched_tweets)
@@ -31,15 +35,15 @@ def tweet_search(api, query, max_tweets, max_id, since_id, lang):
             new_tweets = api.search(q=query, count=remaining_tweets,
                                     since_id=str(since_id),
 				                    max_id=str(max_id-1), lang=lang, tweet_mode='extended')
-            print('found',len(new_tweets),'tweets')
+            print('encontrados',len(new_tweets),'tweets')
             if not new_tweets:
-                print('no tweets found')
+                print('tweet não encontrado')
                 break
             searched_tweets.extend(new_tweets)
             max_id = new_tweets[-1].id
         except tweepy.TweepError:
-            print('exception raised, waiting 15 minutes')
-            print('(until:', dt.datetime.now()+dt.timedelta(minutes=15), ')')
+            print('execeção, esperando 15 minutos')
+            print('(até:', dt.datetime.now()+dt.timedelta(minutes=15), ')')
             time.sleep(15*60)
             break # stop the loop
     return searched_tweets, max_id
@@ -57,7 +61,7 @@ def get_tweet_id(api, date='', days_ago=9, query='a'):
         tweet_date = '{0}-{1:0>2}-{2:0>2}'.format(td.year, td.month, td.day)
         # get list of up to 10 tweets
         tweet = api.search(q=query, count=10, until=tweet_date)
-        print('search limit (start/stop):',tweet[0].created_at)
+        print('procurar o limite (start/stop):',tweet[0].created_at)
         # return the id of the first tweet in the list
         return tweet[0].id
 
@@ -87,7 +91,7 @@ def main():
     # para cada palavra-chave pesquisada iterar
     for search_phrase in search_phrases:
 
-        print('Search phrase =', search_phrase)
+        print('Procurando frase =', search_phrase)
 
         #variáveis do json
         name = search_phrase.split()[0]
@@ -106,7 +110,7 @@ def main():
                   d1.year, d1.month, d1.day, d2.year, d2.month, d2.day)
         json_file = json_file_root + '_' + day + '.json'
         if os.path.isfile(json_file):
-            print('Appending tweets to file named: ',json_file)
+            print('Adicionando tweets ao arquivo: ',json_file)
             read_IDs = True
         
         # authorize and load the twitter API
@@ -118,7 +122,7 @@ def main():
             with open(json_file, 'r') as f:
                 lines = f.readlines()
                 max_id = json.loads(lines[-1])['id']
-                print('Searching from the bottom ID in file')
+                print('Procurando do ID final no arquivo')
         else:
             # get the ID of a tweet that is min_days_old
             if min_days_old == 0:
@@ -127,8 +131,8 @@ def main():
                 max_id = get_tweet_id(api, days_ago=(min_days_old-1))
         # set the smallest ID to search for
         since_id = get_tweet_id(api, days_ago=(max_days_old-1))
-        print('max id (starting point) =', max_id)
-        print('since id (ending point) =', since_id)
+        print('max id (ponto de início) =', max_id)
+        print('since id (último ponto) =', since_id)
         
 
 
@@ -138,7 +142,7 @@ def main():
         count, exitcount = 0, 0
         while dt.datetime.now() < end:
             count += 1
-            print('count =',count)
+            print('quantidade =',count)
             # collect tweets and update max_id
             tweets, max_id = tweet_search(api, search_phrase, max_tweets,
                                           max_id=max_id, since_id=since_id,
@@ -151,9 +155,9 @@ def main():
                 exitcount += 1
                 if exitcount == 3:
                     if search_phrase == search_phrases[-1]:
-                        sys.exit('Maximum number of empty tweet strings reached - exiting')
+                        sys.exit('Número máximo de tweets vazios alcançado - fechando')
                     else:
-                        print('Maximum number of empty tweet strings reached - breaking')
+                        print('Número máximo de tweets vazios alcançado - quebrandoo')
                         break
 
 if __name__ == "__main__":
