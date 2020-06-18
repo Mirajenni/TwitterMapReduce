@@ -1,6 +1,8 @@
 # TwitterMapReduce
 Projeto de SD da Universidade Católica de Pernambuco.
 
+>Utilizei Hadoop 2.10 e Python 3
+
 Como inicializar o Hadoop e fazer o MapReduce:
 Abre o prompt como ADM
 cd C:\Users\Jenni\Desktop\rabbitmq\twitter_search (para o diretório do seu arquivo)
