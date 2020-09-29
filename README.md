@@ -1,6 +1,6 @@
 # TwitterMapReduce
 Projeto de SD da Universidade Católica de Pernambuco.
-
+ **O projeto foi adaptado de uma busca com o Tweepy**
 >Utilizei Hadoop 2.10 e Python 3
 
 Como inicializar o Hadoop e fazer o MapReduce:\
