@@ -3,6 +3,8 @@ Projeto de SD da Universidade Católica de Pernambuco.\
  **O projeto foi adaptado de uma busca com o Tweepy**
 >Utilizei Hadoop 2.10 e Python 3
 
+**COLOQUE UMA API_KEY AO CRIAR ACESSO NO TWITTER DEVELOPER**
+
 Como inicializar o Hadoop e fazer o MapReduce:\
 Abre o prompt como ADM\
 cd C:\Users\Jenni\Desktop\rabbitmq\twitter_search (para o diretório do seu arquivo)\
