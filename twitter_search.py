@@ -16,10 +16,10 @@ channel.queue_declare(queue='coronavirus')
 
 
 def load_api():
-    consumer_key = 'uNx3hCv8DuXxviyzieh9JoAc2'
-    consumer_secret = 'N6mVUm5KAPaX4nFTZJutZvgvqJ9cv4iARQbYTWyiJqiWvprAL6'
-    access_token = '2892750587-gXilL0x4jI2Z71JKFku8oH54m798VUQz6hyEXlv'
-    access_secret = 'fEgLDO9BNunCD05Lr9n0dknjS69QwiNBrsZftbq9LkeCD'
+    consumer_key = '' #ADICIONAR O SEU!
+    consumer_secret = '' #ADICIONAR O SEU!
+    access_token = '' #ADICIONAR O SEU!
+    access_secret = '' #ADICIONAR O SEU!
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_secret)
     # load the twitter API via tweepy
