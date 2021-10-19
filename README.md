@@ -1,5 +1,5 @@
 # TwitterMapReduce
-Projeto de SD da Universidade Católica de Pernambuco.\
+Projeto de Sistemas Distribuídos da Universidade Católica de Pernambuco utilizando Hadoop e Tweepy.\
  **O projeto foi adaptado de uma busca com o Tweepy**
 >Utilizei Hadoop 2.10 e Python 3
 
